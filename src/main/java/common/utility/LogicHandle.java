@@ -34,11 +34,30 @@ public class LogicHandle {
     public static List<String> convertToArrayListString(String str){
         String replace = str;
         if (replace.contains(",")&& replace.contains("[")) {
-            replace = str.replaceAll("^\\[|]$", "");
+            replace = str.replaceAll("^\\[|]|\"$", "");
             List<String> myList = new ArrayList<String>(Arrays.asList(replace.split(",")));
             return myList;
         }
         return null;
+    }
+    public static List<String> convertToArrayListString(String str,String slipStr){
+        String replace = str;
+        if (replace.contains(",")&& replace.contains("[")) {
+            replace = str.replaceAll("^\\[|]|\"$", "");
+            replace = removeString(replace,slipStr);
+            List<String> myList = new ArrayList();
+            for (String text: replace.split("\\,")){
+                myList.add(text);
+            }
+            return myList;
+        }
+        return null;
+    }
+    public static String removeString(String str,String slipStr){
+        if (str.contains(slipStr)) {
+            str = str.replace(slipStr,"");
+        }
+        return str;
     }
     public static String convertListToString(List<String> list){
         StringBuilder resultBuilder = new StringBuilder();
