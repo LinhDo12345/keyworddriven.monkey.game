@@ -242,7 +242,7 @@ public class KeyWordsToActionToVerify extends KeyWordsToAction {
     public static String getText(String locator,String component){
         try {
             Response response = request(Constanst.SCENE_URL, "//" + locator + "." + component);
-            return convert(response, "text").trim();
+            return LogicHandle.replaceStr(convert(response, "text").trim(),"\n");
         }catch (Exception e){
             Log.error("getText "+e.getMessage());
             return "";
@@ -288,7 +288,7 @@ public class KeyWordsToActionToVerify extends KeyWordsToAction {
                 time = LocalDateTime.now();
                 sleep(0.2f);
             }
-            return text.trim();
+            return LogicHandle.replaceStr(text.trim(),"\n");
         }catch (Exception e){
             Log.error("getTextsError "+e.getMessage());
             exception(e.getMessage());
@@ -337,7 +337,7 @@ public class KeyWordsToActionToVerify extends KeyWordsToAction {
                     time = LocalDateTime.now();
                 }
             }
-            return text.trim();
+            return LogicHandle.replaceStr(text.trim(),"\n");
         }catch (Exception e){
             Log.error("getTextsError "+e.getMessage());
             exception(e.getMessage());
@@ -354,16 +354,16 @@ public class KeyWordsToActionToVerify extends KeyWordsToAction {
                     result += value.replace(str,"")+" ";
             }
         }
-        return result.trim();
+        return LogicHandle.replaceStr(result.trim(),"\n");
     }
     public static String getTextLocatorChild(String locator, String component, String key,String... StrSplit){
         String locatorChild = FileHelpers.getValueConfig(FileHelpers.getRootFolder()+Constanst.VARIABLE_PATH_FILE,key)+"/"+locator;
         waitForObject(locatorChild);
-        return  getTextNoColor(locatorChild,component,StrSplit);
+        return  LogicHandle.replaceStr(getTextNoColor(locatorChild,component,StrSplit),"\n");
     }
     public static String getTextContain(String locator,String component,String contain){
         Response response = request(Constanst.SCENE_URL,"//" +locator+"."+component);
-        return String.valueOf(convert(response,"text").trim().contains(contain));
+        return LogicHandle.replaceStr(String.valueOf(convert(response,"text").trim().contains(contain)),"\n");
     }
     public static String getSpineState(String locator){
         try {
